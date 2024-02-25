@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginScreen from './Components/Login/Login';
+import GamePlay from './Components/GamePlay/GamePlay';
+import HistoryScreen from './Components/HistoryScreen/HistoryScreen';
+import LostScreen from './Components/LostScreen/LostScreen';
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  const handleLogin = (user) => {
+    setLoggedInUser(user);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginScreen onLogin={handleLogin} />} />
+          <Route path="/gameplay" element={<GamePlay username={loggedInUser} />} />
+          <Route path="/history" element={<HistoryScreen username={loggedInUser} />} />
+          <Route path="/lost" element={<LostScreen />} />
+        </Routes>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
